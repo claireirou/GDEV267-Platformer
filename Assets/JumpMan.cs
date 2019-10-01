@@ -13,6 +13,7 @@ public class JumpMan : MonoBehaviour
     public float wallRecoverySpeed;
     public float moveSpeed;
     public float jumpForce;
+    
 
     public int wallJumpDirection = 0;
     public int jumpCount = 0;
@@ -21,11 +22,13 @@ public class JumpMan : MonoBehaviour
     public bool wallSliding;
     public bool wallSlideLeft;
     public bool wallSlideRight;
+   
 
     public bool wallJumping;
     public float wallJumpDuration = 0.5f;
     private float wallJumpT;
-
+  
+    
 
     public void Awake()
     {
@@ -37,6 +40,8 @@ public class JumpMan : MonoBehaviour
     {
         
     }
+
+    
     // Test
     // Update is called once per frame
     void Update()
@@ -110,6 +115,13 @@ public class JumpMan : MonoBehaviour
 
         Debug.Log(direction);
         return direction;
+    }
+
+    public static float QuantizedRadian(float radian, int sectors = 8)
+    {
+        float unit = radian / (Mathf.PI * 2);
+        int sector = Mathf.FloorToInt(unit * sectors);
+        return sector * Mathf.PI * 2 / sectors;
     }
 
     private void Jump()
