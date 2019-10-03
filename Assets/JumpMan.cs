@@ -131,7 +131,7 @@ public class JumpMan : MonoBehaviour
         movement.velocity = new Vector2(movement.velocity.x, jumpForce);
         jumpCount--;
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
 
         Debug.Log("Hit");
