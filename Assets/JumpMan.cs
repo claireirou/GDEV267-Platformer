@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class JumpMan : MonoBehaviour
 {
-   
+    GameObject Player;
+
     public MoveAndCollide2D movement;
     public float xInput;
     public float yInput;
@@ -13,7 +14,7 @@ public class JumpMan : MonoBehaviour
     public float wallRecoverySpeed;
     public float moveSpeed;
     public float jumpForce;
-    
+
 
     public int wallJumpDirection = 0;
     public int jumpCount = 0;
@@ -22,13 +23,13 @@ public class JumpMan : MonoBehaviour
     public bool wallSliding;
     public bool wallSlideLeft;
     public bool wallSlideRight;
-   
+
 
     public bool wallJumping;
     public float wallJumpDuration = 0.5f;
     private float wallJumpT;
-  
-    
+
+
 
     public void Awake()
     {
@@ -38,10 +39,10 @@ public class JumpMan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    
+
     // Test
     // Update is called once per frame
     void Update()
@@ -51,7 +52,7 @@ public class JumpMan : MonoBehaviour
         Vector2 playerInput = new Vector2(Input.GetAxis("Horizontal"), 0);
         Vector2 moveDirection = Vector2.zero;
 
-        if(movement.grounded || movement.wallCollision)
+        if (movement.grounded || movement.wallCollision)
         {
             jumpCount = maxJumpCount;
         }
@@ -65,25 +66,26 @@ public class JumpMan : MonoBehaviour
             wallSlideLeft = true;
         }
 
-        if(!wallJumping)
+        if (!wallJumping)
         {
             moveDirection = playerInput * moveSpeed;
 
-        } else if(wallJumping)
+        }
+        else if (wallJumping)
         {
             moveDirection = Vector2.right * moveSpeed * wallJumpDirection;
             wallJumpT += Time.deltaTime;
 
-            if(wallJumpT > wallJumpDuration)
+            if (wallJumpT > wallJumpDuration)
             {
                 wallJumpT = 0;
                 wallJumping = false;
             }
         }
 
-        if(Input.GetButtonDown("Jump") && ((movement.grounded || movement.onWall) || jumpCount > 0))
+        if (Input.GetButtonDown("Jump") && ((movement.grounded || movement.onWall) || jumpCount > 0))
         {
-            if(!wallJumping)
+            if (!wallJumping)
             {
                 Jump();
             }
@@ -95,7 +97,7 @@ public class JumpMan : MonoBehaviour
             }
 
         }
-       
+
         movement.SetVelocity(moveDirection);  //Velocity equals moveDirection
 
     }
@@ -104,7 +106,7 @@ public class JumpMan : MonoBehaviour
     {
         int direction = 1;
 
-         if (wallSlideLeft)
+        if (wallSlideLeft)
         {
             direction = 1;
         }
@@ -128,5 +130,15 @@ public class JumpMan : MonoBehaviour
     {
         movement.velocity = new Vector2(movement.velocity.x, jumpForce);
         jumpCount--;
+    }
+    void OnTriggerEnter(Collider other)
+    {
+
+        Debug.Log("Hit");
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            Debug.Log("Is coin");
+            other.gameObject.SetActive(false);
+        }
     }
 }
