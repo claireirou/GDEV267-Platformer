@@ -119,12 +119,7 @@ public class JumpMan : MonoBehaviour
         return direction;
     }
 
-    public static float QuantizedRadian(float radian, int sectors = 8)
-    {
-        float unit = radian / (Mathf.PI * 2);
-        int sector = Mathf.FloorToInt(unit * sectors);
-        return sector * Mathf.PI * 2 / sectors;
-    }
+    
 
     private void Jump()
     {
