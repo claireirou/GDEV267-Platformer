@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JumpMan : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class JumpMan : MonoBehaviour
     public MoveAndCollide2D movement;
     public float xInput;
     public float yInput;
+    public Text countText;
+    public Text winText;
+    private int count;
 
     public float wallSlideSpeed;
     public float wallRecoverySpeed;
@@ -42,6 +46,9 @@ public class JumpMan : MonoBehaviour
     void Start()
     {
         faceDirection = 1;
+        count = 0;
+        SetCountText();
+        winText.text = "";
     }
     // Test
     // Update is called once per frame
@@ -200,6 +207,16 @@ public class JumpMan : MonoBehaviour
         if (other.gameObject.CompareTag("Coin"))
         {
             other.gameObject.SetActive(false);
+            count = count + 1;
+            SetCountText();
+        }
+    }
+    void SetCountText()
+    {
+        countText.text = "Count: " + count.ToString();
+        if (count >= 230)
+        {
+            winText.text = "You Win";
         }
     }
 }
